@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 
 public class ConvertCurrency {
     public int intvalue=0;
@@ -25,9 +26,9 @@ public ConvertCurrency() {
   //  frame.setContentPane(this.panel1);
    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-   frame.setMaximumSize(new Dimension(300,250));
+   frame.setMaximumSize(new Dimension(700,250));
    frame.setMinimumSize(new Dimension(300, 250));
-    frame.setBounds(400,100,500,380);
+    frame.setBounds(400,100,400,380);
     panel1.setBackground(Color.lightGray);
     panel1.setBorder(BorderFactory.createLineBorder(Color.blue,2));
 
@@ -96,9 +97,7 @@ public ConvertCurrency() {
         public void actionPerformed(ActionEvent e) {
                    intvalue=1;
            txtjmdAmnt.setText("");
-           //cmdCurrency
            txtSum.setText("");
-
            cmdCurrency.setSelectedIndex(0);
 
         }
@@ -147,12 +146,11 @@ public ConvertCurrency() {
                        JOptionPane.showMessageDialog(null," Number entered should be greater than 0");
                        return;
                    }
-                   double total=Math.round(text_amount*CurAmount);
-                   BigDecimal a = new BigDecimal(total);
-                   BigDecimal roundOff = a.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+                   DecimalFormat df = new DecimalFormat();
+                   df.setMaximumFractionDigits(2);
 
-                   String tot =String.valueOf(roundOff);
-                   txtSum.setText(tot);
+                   double total=text_amount*CurAmount;
+                   txtSum.setText(String.valueOf((df.format(total))));
                }
                catch (Exception ex) {
                    JOptionPane.showMessageDialog(null,ex.getMessage()+" Please enter a valid number to convert");
