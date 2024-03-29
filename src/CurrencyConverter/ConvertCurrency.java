@@ -134,7 +134,7 @@ public ConvertCurrency() {
 
        if (txtjmdAmnt.getText().equals(""))
        {
-           JOptionPane.showMessageDialog(null,"Please enter the amount to convert");
+           JOptionPane.showMessageDialog(null,"Please enter the amount to be converted.", "ERROR", JOptionPane.WARNING_MESSAGE);
 
        }
        else
@@ -143,7 +143,7 @@ public ConvertCurrency() {
                {
                    double text_amount=Double.parseDouble(txtjmdAmnt.getText());
                    if(text_amount<=0){
-                       JOptionPane.showMessageDialog(null," Number entered should be greater than 0");
+                       JOptionPane.showMessageDialog(null,"Number entered should be greater than 0.","ERROR", JOptionPane.WARNING_MESSAGE);
                        return;
                    }
                    DecimalFormat df = new DecimalFormat();
@@ -153,7 +153,7 @@ public ConvertCurrency() {
                    txtSum.setText(String.valueOf((df.format(total))));
                }
                catch (Exception ex) {
-                   JOptionPane.showMessageDialog(null,ex.getMessage()+" Please enter a valid number to convert");
+                   JOptionPane.showMessageDialog(null,ex.getMessage()+" Please enter a valid number to convert.","ERROR", JOptionPane.WARNING_MESSAGE);
                    throw new RuntimeException(ex);
 
                }
