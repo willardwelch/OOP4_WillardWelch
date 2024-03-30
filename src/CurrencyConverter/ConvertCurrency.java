@@ -5,13 +5,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.text.DecimalFormat;
 
 public class ConvertCurrency {
-    public int intvalue=0;
+
     private JPanel panel1;
-    private JTextField txtjmdAmnt;
+    private JTextField txt_jmdAmount;
     private JComboBox cmdCurrency;
     private JTextField txtSum;
     private JButton btnConvert;
@@ -22,7 +21,7 @@ public ConvertCurrency() {
  JFrame frame = new JFrame("Currency Converter");
  frame.setForeground(Color.blue);
     ///// mainMenu IS ALWAYS NULL WITHOUT THE NEXT LINE!!!!
-    this.panel1 = new JPanel();  //recreating a new panel to overite the one created
+    this.panel1 = new JPanel();  //recreating a new panel to overwrite the one created
   //  frame.setContentPane(this.panel1);
    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -34,12 +33,12 @@ public ConvertCurrency() {
 
     JLabel inputs=new JLabel("Input $:");
     frame.add(inputs);
-    frame.add(txtjmdAmnt);
+    frame.add(txt_jmdAmount);
     inputs.setBounds(10,10,150,20);
-    txtjmdAmnt.setBounds(110,10,150,20);
+    txt_jmdAmount.setBounds(110,10,150,20);
     frame.setEnabled((true));
-    txtjmdAmnt.setForeground(Color.blue);
-    txtjmdAmnt.setBorder(BorderFactory.createLineBorder(Color.blue,1));
+    txt_jmdAmount.setForeground(Color.blue);
+    txt_jmdAmount.setBorder(BorderFactory.createLineBorder(Color.blue,1));
 
 
     JLabel CurType=new JLabel("Currency Type:");
@@ -51,24 +50,25 @@ public ConvertCurrency() {
     cmdCurrency.setForeground(Color.blue);
     cmdCurrency.setBorder(BorderFactory.createLineBorder(Color.blue,1));
 
-    JLabel lblAmnt=new JLabel("JMD Amount $:");
-    frame.add(lblAmnt);
-    lblAmnt.setBounds(10,110,90,20);
-    frame.add(txtSum);
+    JLabel lbl_Amount=new JLabel("JMD Amount $:");
+    frame.add(lbl_Amount);//adding the lbl Amount to the frame
+    lbl_Amount.setBounds(10,110,90,20);
+
+    frame.add(txtSum);//adding the txtSum to the frame
     txtSum.setBounds(110,110,150,20);
-    txtSum.setForeground(Color.blue);
+    txtSum.setForeground(Color.blue); //setting the font colour
     //txtSum.setEnabled(false);
     txtSum.setBorder(BorderFactory.createLineBorder(Color.blue,1));
 
-    frame.add(btnConvert);
-   // btnConvert.setEnabled(true);
+    frame.add(btnConvert); //adding the convert button to the frame
     btnConvert.setBounds(60,150,90,30);
-    btnConvert.setBackground(Color.blue);
-    btnConvert.setForeground(Color.WHITE);
-    frame.add(btnClear);
+    btnConvert.setBackground(Color.blue);//setting the colour of the button
+    btnConvert.setForeground(Color.WHITE);//setting the font of the button
+
+    frame.add(btnClear);//adding the clear button to the frame
     btnClear.setBounds(155,150,90,30);
-    btnClear.setBackground(Color.blue);
-    btnClear.setForeground(Color.WHITE);
+    btnClear.setBackground(Color.blue); //setting the colour of the button
+    btnClear.setForeground(Color.WHITE); //setting the font of the button
    // btnClear.setEnabled(true);
 
    frame.getContentPane().add(panel1);
@@ -76,10 +76,10 @@ public ConvertCurrency() {
     frame.setVisible(true);
 
 
-    btnConvert.addActionListener(new ActionListener() {
+    btnConvert.addActionListener(new ActionListener() { //convert button clicked
         @Override
         public void actionPerformed(ActionEvent e) {
-            intvalue=0;
+
             // txtSum.setText(cmdCurrency.getSelectedItem().toString());
             try {
                 CalculateExchangeRate();
@@ -92,11 +92,11 @@ public ConvertCurrency() {
 
         }
     });
-    btnClear.addActionListener(new ActionListener() {
+    btnClear.addActionListener(new ActionListener() { //clear button clicked
                @Override
         public void actionPerformed(ActionEvent e) {
-                   intvalue=1;
-           txtjmdAmnt.setText("");
+
+           txt_jmdAmount.setText("");
            txtSum.setText("");
            cmdCurrency.setSelectedIndex(0);
 
@@ -109,30 +109,19 @@ public ConvertCurrency() {
         new ConvertCurrency();
     }
 
- public double getCurrencyAmnt(String currencyType){
-      double currencyAmount;
+ public double getCurrency_Amount(String currencyType){ //initializing the currency amount and returning the value base on parameter passed
 
-      if(currencyType.equals("US"))
-      {
-          currencyAmount=129.02;
-      }
-      else if(currencyType.equals("CAN")) {
-          currencyAmount=97.50;
-      }
-      else if(currencyType.equals("Euro")) {
-          currencyAmount=164.33;
-      }
-      else{
-          currencyAmount=0;
-      }
-      return currencyAmount;
+     return switch (currencyType) {
+         case "US" -> 129.02;
+         case "CAN" ->
+                 97.50;
+         default -> 164.33;
+     };
  }
-   public void CalculateExchangeRate() throws IOException {
-       double CurAmount=getCurrencyAmnt(cmdCurrency.getSelectedItem().toString());
-     if (intvalue>0)
-       return;
+   public void CalculateExchangeRate() throws IOException { //calculating the exchange rate by multiplying amount entered* the currency rate
+       double CurAmount=getCurrency_Amount(String.valueOf(cmdCurrency.getSelectedItem()));
 
-       if (txtjmdAmnt.getText().equals(""))
+     if (txt_jmdAmount.getText().equals(""))
        {
            JOptionPane.showMessageDialog(null,"Please enter the amount to be converted.", "ERROR", JOptionPane.WARNING_MESSAGE);
 
@@ -141,7 +130,7 @@ public ConvertCurrency() {
        {
                try
                {
-                   double text_amount=Double.parseDouble(txtjmdAmnt.getText());
+                   double text_amount=Double.parseDouble(txt_jmdAmount.getText());
                    if(text_amount<=0){
                        JOptionPane.showMessageDialog(null,"Number entered should be greater than 0.","ERROR", JOptionPane.WARNING_MESSAGE);
                        return;
