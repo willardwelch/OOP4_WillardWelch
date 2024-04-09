@@ -74,7 +74,7 @@ public ConvertCurrency() {
    frame.getContentPane().add(panel1);
     frame.pack();
     frame.setVisible(true);
-
+    frame.setResizable(false);
 
     btnConvert.addActionListener(new ActionListener() { //convert button clicked
         @Override
